@@ -9,15 +9,16 @@ script:
   - docker run -e CI=true boris90/react-test npm test
 
 after_success:
-  - docker build -t boris90/multi-client ./client
-  - docker build -t boris90/multi-nginx ./nginx
-  - docker build -t boris90/multi-server ./server
-  - docker build -t boris90/multi-worker ./worker
+  - docker build -t boris90/multi-client:latest ./client
+  - docker build -t boris90/multi-nginx:latest ./nginx
+  - docker build -t boris90/multi-server:latest ./server
+  - docker build -t boris90/multi-worker:latest ./worker
 
   #Login in to the docker CLI
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --passsword-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --passsword-stdin docker.io
+  #docker login -u="$DOCKER_ID" -p="$DOCKER_PASSWORD"
   # Take those images and push them to docker hub
-  - docker push boris90/multi-client
-  - docker push boris90/multi-nginx
-  - docker push boris90/multi-server
-  - docker push boris90/multi-worker
+  - docker push boris90/multi-client:latest
+  - docker push boris90/multi-nginx:latest
+  - docker push boris90/multi-server:latest
+  - docker push boris90/multi-worker:latest
